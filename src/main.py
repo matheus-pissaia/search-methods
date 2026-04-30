@@ -25,26 +25,25 @@ def is_valid_move(row: int, col: int) -> bool:
 
 
 # Converts the index in the list to a row and column values
-def indexToRowAndCol(index: int) -> tuple[int, int]:
+def index_to_row_and_col(index: int) -> tuple[int, int]:
     return index // N, index % N
 
 
 # Converts row and col to the index in the list
-def rowAndColToIndex(row: int, col: int) -> int:
-    return row * N + col
+def row_and_col_to_index(row: int, col: int) -> int:
+    return (row * N) + col
 
 
 def solve_puzzle_dfs(board: list[int]):
-    empty_index = board.index(0)
-
     stack: list[GameState] = []
     visited: set[tuple] = set()
 
     visited.add(tuple(board))
-    stack.append(GameState(board, empty_index, 0))
+    stack.append(GameState(board, board.index(0), 0))
 
     while stack:
         curr_state = stack.pop()
+        empty_index = curr_state.empty_index
 
         if curr_state.is_goal_state:
             print("Goal state reached at depth", curr_state.depth)
@@ -54,21 +53,21 @@ def solve_puzzle_dfs(board: list[int]):
         print_board(curr_state.board)
 
         for move in Move:
-            row, col = indexToRowAndCol(curr_state.empty_index)
+            row, col = index_to_row_and_col(empty_index)
 
-            # Update row and col with move
-            row, col = row + move.value[0], col + move.value[1]
+            # Calculate the new row and column from desired move
+            new_row, new_col = row + move.value[0], col + move.value[1]
 
-            # Check if move is valid
-            if is_valid_move(row, col):
-                new_empty_index = rowAndColToIndex(row, col)
+            if is_valid_move(new_row, new_col):
+                new_empty_index = row_and_col_to_index(new_row, new_col)
 
-                # Create a copy of the board and swap values
+                # Create a copy of the board
                 new_board = list(curr_state.board)
 
-                new_board[curr_state.empty_index], new_board[new_empty_index] = (
+                # Swap tiles
+                new_board[empty_index], new_board[new_empty_index] = (
                     new_board[new_empty_index],
-                    new_board[curr_state.empty_index],
+                    new_board[empty_index],
                 )
 
                 new_board_tuple = tuple(new_board)
