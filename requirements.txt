@@ -13,3 +13,4 @@ pyflakes==3.4.0
 Pygments==2.20.0
 pytest==9.0.3
 pytokens==0.4.1
+tabulate==0.10.0
