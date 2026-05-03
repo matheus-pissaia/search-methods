@@ -183,7 +183,7 @@ def run_all(board: list[int], difficulty: str) -> list[dict]:
             }
             output_dir = Path(__file__).parent.parent / "output"
             output_dir.mkdir(parents=True, exist_ok=True)
-            with open(output_dir / f"output_{file_key}.json", "w") as f:
+            with open(output_dir / f"{file_key}.json", "w") as f:
                 json.dump(
                     {
                         "algorithm": name,
