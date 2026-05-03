@@ -199,7 +199,6 @@ def run_all(board: list[int], difficulty: str) -> list[dict]:
                         "visited": result["visited"],
                     },
                     f,
-                    indent=2,
                 )
 
         results.append(row)
