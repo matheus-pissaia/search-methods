@@ -145,9 +145,11 @@ ALGORITHMS = [
 
 # fmt: off
 BOARDS = {
-    "Easy":   [1, 2, 3, 0, 4, 6, 7, 5, 8],
-    "Medium": [1, 2, 3, 4, 0, 5, 6, 7, 8],
-    "Hard":   [8, 6, 7, 2, 5, 4, 3, 0, 1],
+    "Easy":     [1, 2, 3, 0, 4, 6, 7, 5, 8],
+    "Medium 1": [1, 2, 3, 4, 0, 5, 6, 7, 8],
+    "Medium 2": [1, 3, 6, 5, 0, 2, 4, 7, 8],
+    "Hard 1":   [8, 6, 7, 2, 5, 4, 3, 0, 1],
+    "Hard 2":   [6, 4, 7, 8, 5, 0, 3, 2, 1],
 }
 # fmt: on
 
@@ -168,6 +170,7 @@ def run_all(board: list[int], difficulty: str) -> list[dict]:
                 "path_length": "N/A",
                 "time": f"{elapsed:.4f}s",
                 "max_frontier_size": "N/A",
+                "path": None,
             }
         else:
             row = {
@@ -176,8 +179,10 @@ def run_all(board: list[int], difficulty: str) -> list[dict]:
                 "path_length": result["path_length"],
                 "time": f"{elapsed:.4f}s",
                 "max_frontier_size": result["max_frontier_size"],
+                "path": result["path"],
             }
             output_dir = Path(__file__).parent.parent / "output"
+            output_dir.mkdir(parents=True, exist_ok=True)
             with open(output_dir / f"output_{file_key}.json", "w") as f:
                 json.dump(
                     {
@@ -213,6 +218,10 @@ def print_table(difficulty: str, board: list[int], results: list[dict]):
 
 def main():
     for difficulty, board in BOARDS.items():
+        if not is_solvable(board):
+            print(f"{difficulty} — {board}")
+            print("  Skipped: board is not solvable.\n")
+            continue
         results = run_all(board, difficulty)
         print_table(difficulty, board, results)
         print()
