@@ -1,6 +1,6 @@
-# Dimensions of the board (3x3)
 from GameState import GameState
 
+# Dimensions of the board (3x3)
 N = 3
 
 
