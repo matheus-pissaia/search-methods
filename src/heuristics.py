@@ -8,12 +8,9 @@ def h_zero(_board: list[int]) -> int:
 
 
 # Non-admissible heuristic - returns the number of misplaced tiles multiplied
-# by 3, leading to an overestimation in some cases.
+# by 3, leading to an overestimation.
 def h_misplaced_x3(board: list[int]) -> int:
-    return (
-        sum(1 for i, tile in enumerate(board) if tile != 0 and tile != goal_state[i])
-        * 3
-    )
+    return h_misplaced(board) * 3
 
 
 # Admissible heuristic - returns the number of misplaced tiles
