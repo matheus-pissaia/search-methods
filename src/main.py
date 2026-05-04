@@ -17,13 +17,13 @@ from utils import (
 
 # fmt: off
 # Different difficulty boards for benchmarking
-BOARDS = {
-    "Easy":     [1, 2, 3, 0, 4, 6, 7, 5, 8],
-    "Medium 1": [1, 2, 3, 4, 0, 5, 6, 7, 8],
-    "Medium 2": [1, 3, 6, 5, 0, 2, 4, 7, 8],
-    "Hard 1":   [8, 6, 7, 2, 5, 4, 3, 0, 1],
-    "Hard 2":   [6, 4, 7, 8, 5, 0, 3, 2, 1],
-}
+BOARDS = [
+    ("Easy", [1, 2, 3, 0, 4, 6, 7, 5, 8]),
+    ("Medium 1", [1, 2, 3, 4, 0, 5, 6, 7, 8]),
+    ("Medium 2", [1, 3, 6, 5, 0, 2, 4, 7, 8]),
+    ("Hard 1", [8, 6, 7, 2, 5, 4, 3, 0, 1]),
+    ("Hard 2", [6, 4, 7, 8, 5, 0, 3, 2, 1]),
+]
 # fmt: on
 
 
@@ -157,7 +157,7 @@ def dump_result(result: dict, name: str, difficulty: str, elapsed: float):
 
 
 def main():
-    for difficulty, board in BOARDS.items():
+    for difficulty, board in BOARDS:
         if not is_solvable(board):
             print(f"{difficulty} — {board}")
             print("  Skipped: board is not solvable.\n")
